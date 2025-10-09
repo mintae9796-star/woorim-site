@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" id="viewportMeta" content="width=device-width, initial-scale=1" />
+<title>우림비닐하우스 · 맞춤형 시공/설계/보수 전문</title>
+<meta name="description" content="현장 맞춤 설계·시공·보수까지 원스톱. 사례/가격/후기 한 화면에 확인하고 바로 상담 받으세요." />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+
+<style>
+:root{
+  --brand:#5A7F71; --brand-ink:#35564a; --accent:#A3B18A;
+  --bg:#ffffff; --text:#1f2937; --muted:#6b7280;
+  --card:#F8FAF9; --line:#e6eae7;
+  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.08);
+  --container:1040px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.7}
+a{color:var(--brand);text-decoration:none}
+img{max-width:100%;height:auto;border-radius:12px;display:block}
+.container{max-width:var(--container);margin:0 auto;padding:0 16px}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;min-height:56px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900}
+.logo-badge{width:28px;height:28px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:.9rem}
+.btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:12px 16px;border-radius:999px;background:var(--brand);color:#fff;font-weight:800;border:0;cursor:pointer;box-shadow:var(--shadow);transition:.18s}
+.btn:hover{filter:brightness(.96)}
+.btn.alt{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+
+/* Hero */
+.hero{padding:58px 0;background:radial-gradient(900px 230px at 50% -120px, rgba(90,127,113,.10), transparent 60%)}
+.hero h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+.hero .lead{color:var(--muted);margin:0 0 16px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.tag{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:12px}
+@media(min-width:900px){ .hero h1{font-size:40px} }
+
+/* Section base */
+section{padding:42px 0}
+h2{font-size:22px;margin:0 0 12px}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.grid-2{grid-template-columns:1fr}
+.grid-3{grid-template-columns:1fr}
+@media(min-width:760px){ .grid-2{grid-template-columns:repeat(2,1fr)} }
+@media(min-width:980px){ .grid-3{grid-template-columns:repeat(3,1fr)} }
+
+/* Benefit */
+.benefit{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.benefit .ico{flex:0 0 38px;height:38px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:#253528;font-weight:900}
+
+/* 캐러셀 기본 */
+#caseCarousel.carousel{ --gap:12px; position:relative; overflow:hidden; }
+#caseCarousel .slides{
+  display:flex;
+  gap:var(--gap);
+  transition:transform .5s ease;
+}
+
+/* 모든 카드 동일 폭 고정 */
+#caseCarousel .card{
+  flex:0 0 100%;         /* 한 화면에 1장씩 */
+  min-width:100%;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+}
+
+/* 이미지 고정 비율 (16:9) */
+#caseCarousel .card .media{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+}
+#caseCarousel .card .media img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+
+/* 캡션 영역 기본 */
+#caseCarousel .card .caption{ padding:12px 14px; }
+
+/* Pricing */
+.price{display:grid;gap:10px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.price .head{padding:16px;background:linear-gradient(180deg,#f2f6f3,#ffffff)}
+.price .num{font-weight:900;color:var(--brand-ink);font-size:20px}
+.price .body{padding:12px 16px;display:grid;gap:8px}
+.check{display:flex;gap:8px;align-items:center}
+.check:before{content:"✔";color:var(--brand-ink);font-weight:900}
+
+/* Reviews & FAQ */
+.review{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+details+details{margin-top:8px}
+summary{cursor:pointer;font-weight:800;color:#253528}
+
+/* Sticky CTA */
+.sticky-cta{position:sticky;bottom:0;z-index:35;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(10px);border-top:1px solid var(--line);padding:10px}
+.sticky-cta .row{display:flex;gap:8px}
+.sticky-cta .row .btn{flex:1}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease, transform .55s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* Form (문의) */
+#inquiry{gap:16px;background:#fff}
+#inquiry label{display:grid;gap:8px;font-weight:600}
+#inquiry label span{font-size:13px;color:var(--muted)}
+#inquiry input, #inquiry textarea{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  font:inherit;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+#inquiry textarea{min-height:120px;resize:vertical}
+#inquiry input:focus, #inquiry textarea:focus{
+  border-color:var(--brand);
+  box-shadow:0 0 0 4px rgba(90,127,113,.12);
+}
+#formStatus{margin:4px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#home"><span class="logo-badge">GH</span> 우림비닐하우스</a>
+    <a class="btn alt" href="#contact">무료 상담</a>
+  </div>
+</header>
+
+<main id="home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="reveal">현장에 딱 맞춘 <span style="color:var(--brand)">비닐하우스</span>,<br>설계·시공·보수까지 한 번에</h1>
+      <p class="lead reveal">견적 뽑기 전, <b>사례·가격·후기</b>만 빠르게 보고 결정하세요.</p>
+      <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="#contact">바로 상담 받기</a>
+        <a class="btn alt" href="#cases">사례 먼저 보기</a>
+      </div>
+      <div class="tags reveal">
+        <span class="tag">현장맞춤 설계</span><span class="tag">내풍/적설 보강</span><span class="tag">자동개폐/관수</span><span class="tag">사후관리</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section>
+    <div class="container">
+      <h2 class="reveal">필요한 것만, 핵심만 제공합니다</h2>
+      <div class="grid grid-3">
+        <div class="benefit reveal"><div class="ico">1</div><div><b>현장 진단 포함</b><br>과투자 없이 꼭 필요한 사양만 제안.</div></div>
+        <div class="benefit reveal"><div class="ico">2</div><div><b>견적 투명 공시</b><br>예상 밖 추가비용 최소화.</div></div>
+        <div class="benefit reveal"><div class="ico">3</div><div><b>A/S·유지관리</b><br>무상 A/S 및 정기 점검 지원.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cases Carousel (스와이프) -->
+  <section id="cases">
+    <div class="container">
+      <h2 class="reveal">시공사례</h2>
+      <div class="carousel reveal" id="caseCarousel">
+        <div class="slides">
+          <!-- via.placeholder.com 샘플 (텍스트는 URL 인코딩됨) -->
+          <article class="card case">
+            <div class="media">
+            <img src="https://via.placeholder.com/1200x675.png?text=%EC%97%B0%EB%8F%99%20%ED%95%98%EC%9A%B0%EC%8A%A4%20%EC%8B%A0%EC%B6%95" alt="연동 하우스 신축">
+            </div>
+            <div class="caption"><h3>연동 하우스 신축</h3><p class="muted">자동개폐 포함 · 2025-05-10</p></div>
+          </article>
+          <article class="card case">
+            <div class="media">
+            <img src="https://via.placeholder.com/1200x675.png?text=%EB%8B%A8%EB%8F%99%20%ED%95%98%EC%9A%B0%EC%8A%A4%20%EB%B3%B4%EA%B0%95" alt="단동 하우스 보강">
+            </div>
+            <div class="caption"><h3>단동 하우스 보강</h3><p class="muted">골조 보강 및 피복 교체 · 2025-03-22</p></div>
+          </article>
+          <article class="card case">
+            <div class="media">
+            <img src="https://via.placeholder.com/1200x675.png?text=%EA%B4%80%EC%88%98%2F%ED%99%98%EA%B2%BD%20%EC%9E%90%EB%8F%99%ED%99%94" alt="관수/환경 자동화">
+            </div>
+            <div class="caption"><h3>관수/환경 자동화</h3><p class="muted">효율 개선 · 2025-04-03</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="reveal">대략 견적(부가세 별도)</h2>
+      <div class="price reveal">
+        <div class="head"><h3>연동 하우스(중형)</h3><div class="num">₩6,500,000 ~</div></div>
+        <div class="body">
+          <div class="check">구조 보강/기초 강화</div>
+          <div class="check">측창·환기 최적화</div>
+          <div class="check">유지관리 가이드 제공</div>
+          <a class="btn" href="#contact" style="margin-top:6px;justify-content:center">내 현장 기준 견적 받기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section>
+    <div class="container">
+      <h2 class="reveal">고객 후기</h2>
+      <div class="grid grid-2">
+        <div class="review reveal"><b>“바람 많은 지역도 튼튼합니다.”</b><p class="muted">태풍 지나가도 문제 없었어요.</p></div>
+        <div class="review reveal"><b>“견적이 깔끔해서 믿음이 갔어요.”</b><p class="muted">세부 설명이 안심을 줬습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <h2 class="reveal">자주 묻는 질문</h2>
+      <details class="reveal"><summary>예산은 어느 정도?</summary><p class="muted">현장 진단 후 정확히 안내드립니다.</p></details>
+      <details class="reveal"><summary>시공 기간은?</summary><p class="muted">규모에 따라 3일~2주.</p></details>
+      <details class="reveal"><summary>A/S는?</summary><p class="muted">무상 A/S + 정기 점검 옵션.</p></details>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="reveal">상담 요청</h2>
+      <form id="inquiry" class="grid grid-2 card reveal">
+        <label><span>이름</span><input name="name" required placeholder="홍길동"/></label>
+        <label><span>연락처</span><input name="phone" required placeholder="010-0000-0000"/></label>
+        <label style="grid-column:1/-1"><span>요청</span><textarea name="need" placeholder="예: 연동 신축 / 자동개폐 포함 / 현장주소 ..."></textarea></label>
+        <div style="grid-column:1/-1;display:flex;gap:8px"><button class="btn" type="submit">메일로 보내기</button></div>
+        <p id="formStatus" class="muted"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Sticky CTA -->
+  <div class="sticky-cta">
+    <div class="container"><div class="row"><a class="btn" href="#contact">상담 요청</a><a class="btn alt" href="#pricing">견적</a></div></div>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-top:1px solid var(--line)">
+    <span class="muted">© <span id="y"></span> 우림비닐하우스</span>
+  </div>
+</footer>
+
+<script>
+// Year
+document.getElementById('y').textContent = new Date().getFullYear();
+
+// Scroll reveal
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver'in window)){els.forEach(el=>el.classList.add('visible'));return;}
+  const io=new IntersectionObserver((entries,ob)=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');ob.unobserve(en.target);}});
+  },{threshold:0.12});
+  els.forEach(el=>io.observe(el));
+})();
+
+// Form mailto
+document.getElementById('inquiry').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const body=`이름:${f.get('name')}\n연락처:${f.get('phone')}\n요청:${f.get('need')}`;
+  const subject=encodeURIComponent('[상담요청]');
+  location.href=`mailto:contact@example.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+  document.getElementById('formStatus').textContent='메일 앱이 열리지 않으면 전화로 문의해주세요.';
+});
+
+/* === Carousel: 모바일 스와이프/데스크톱 드래그 (fixed) === */
+(function(){
+  const wrap = document.getElementById('caseCarousel');
+  if(!wrap) return;
+  const track = wrap.querySelector('.slides');
+  const cards = [...track.children];
+
+  let idx = 0, startX = 0, curX = 0, dragging = false;
+  let width = wrap.clientWidth, gap = 0;
+
+  function readGap(){
+    const cs = getComputedStyle(track);
+    gap = parseFloat(cs.columnGap || cs.gap || 0) || 0;
+  }
+
+  function unit(){          // 한 장 이동 거리(px)
+    return width + gap;     // 컨테이너 폭 + gap 만큼 이동
+  }
+
+  function to(i, animate=true){
+    const count = cards.length;
+    idx = (i + count) % count;
+    track.style.transition = animate ? 'transform .5s ease' : 'none';
+    track.style.transform = `translateX(${-idx * unit()}px)`;
+  }
+
+  function onResize(){
+    width = wrap.clientWidth;
+    readGap();
+    to(idx, false);
+  }
+
+  // 초기 세팅
+  readGap();
+  to(0, false);
+  window.addEventListener('resize', onResize);
+
+  // 드래그/스와이프
+  function down(x){ dragging=true; startX=x; curX=x; track.style.transition='none'; }
+  function move(x){
+    if(!dragging) return;
+    curX = x;
+    const dx = curX - startX; // px
+    track.style.transform = `translateX(${-idx*unit() + dx}px)`;
+  }
+  function up(){
+    if(!dragging) return;
+    dragging=false;
+    const dx = curX - startX;
+    const threshold = width * 0.18; // 18% 넘기면 다음/이전
+    if(Math.abs(dx) > threshold){ to(idx + (dx < 0 ? 1 : -1), true); }
+    else { to(idx, true); }
+  }
+
+  // 터치
+  track.addEventListener('touchstart', e=>down(e.touches[0].clientX), {passive:true});
+  track.addEventListener('touchmove',  e=>move(e.touches[0].clientX), {passive:true});
+  track.addEventListener('touchend',   up);
+  // 마우스
+  track.addEventListener('mousedown', e=>{e.preventDefault();down(e.clientX);});
+  window.addEventListener('mousemove', e=>move(e.clientX));
+  window.addEventListener('mouseup', up);
+
+  // 자동 롤링
+  let timer = setInterval(()=>to(idx+1), 5000);
+  wrap.addEventListener('mouseenter', ()=>clearInterval(timer));
+  wrap.addEventListener('mouseleave', ()=>{timer=setInterval(()=>to(idx+1),5000);});
+})();
+</script>
+</body>
+</html>

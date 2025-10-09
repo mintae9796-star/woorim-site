@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>우림비닐하우스 · 관리자</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <!-- Quill Editor -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#5A7F71; --ink:#1f2937; --muted:#6b7280;
+      --bg:#f6f8f7; --card:#ffffff; --line:#e6eae7; --danger:#e5484d; --ok:#16a34a;
+      --radius:16px; --shadow:0 10px 28px rgba(0,0,0,.06);
+      --w:1180px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:var(--brand);text-decoration:none}
+    .container{max-width:var(--w);margin:0 auto;padding:16px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:800}
+    .btn.danger{background:#fff;border-color:var(--danger);color:var(--danger)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    header.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);border-bottom:1px solid var(--line);backdrop-filter:saturate(180%) blur(10px)}
+    header .wrap{max-width:var(--w);margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:900}
+    .logo-badge{width:28px;height:28px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff}
+    main{display:grid;grid-template-columns:240px 1fr;gap:16px;padding:16px}
+    nav.side{position:sticky;top:64px;height:calc(100dvh - 80px);padding:12px}
+    nav.side .link{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:6px 0;border-radius:12px;color:#111}
+    nav.side .link.active, nav.side .link:hover{background:#eef3f1}
+    section.view{padding:16px}
+    h1{font-size:20px;margin:0 0 12px}
+    h2{font-size:18px;margin:18px 0 8px}
+    .grid{display:grid;gap:12px}
+    .grid-2{grid-template-columns:1fr}
+    @media(min-width:960px){ .grid-2{grid-template-columns:1fr 1fr} }
+    label{display:grid;gap:6px;font-weight:600}
+    input[type="text"],input[type="url"],input[type="email"],input[type="number"],textarea,select{
+      width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit
+    }
+    .row{display:flex;gap:8px;align-items:center}
+    .table{width:100%;border-collapse:separate;border-spacing:0}
+    .table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:#eef3f1;color:#26443a;font-size:12px;border:1px solid #dfebe7}
+    .muted{color:var(--muted)}
+    .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap}
+    .editor{border:1px solid var(--line);border-radius:12px;background:#fff}
+    .ql-container{min-height:200px;border-bottom-left-radius:12px;border-bottom-right-radius:12px}
+    .status{font-size:13px;margin-top:6px}
+    .badge-ok{color:var(--ok)}
+    .badge-err{color:var(--danger)}
+    .kicker{font-size:12px;color:var(--muted)}
+    .auth{max-width:420px;margin:8vh auto;padding:24px}
+    .right{justify-content:flex-end}
+    .hidden{display:none}
+    .cover{aspect-ratio:16/9;object-fit:cover;width:100%;border-radius:12px;border:1px solid var(--line)}
+    .help{font-size:12px;color:var(--muted)}
+    .sticky{position:sticky;top:76px}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="logo"><span class="logo-badge">GH</span> 우림비닐하우스 · 관리자</div>
+      <div class="row">
+        <span id="who" class="kicker"></span>
+        <button id="btnSignOut" class="btn">로그아웃</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 로그인 화면 -->
+  <div id="authView" class="container">
+    <div class="card auth">
+      <h1>관리자 로그인</h1>
+      <p class="kicker">허용된 계정만 접근 가능합니다.</p>
+      <div class="grid">
+        <label>이메일<input id="inEmail" type="email" placeholder="admin@example.com"></label>
+        <label>비밀번호<input id="inPw" type="password" placeholder="●●●●●●●●"></label>
+        <button id="btnSignIn" class="btn primary">로그인</button>
+        <div id="authStatus" class="status muted"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 대시보드 -->
+  <main id="app" class="hidden">
+    <nav class="side card">
+      <a href="#settings" class="link active">사이트 설정</a>
+      <a href="#cases" class="link">시공사례</a>
+      <a href="#reviews" class="link">고객후기</a>
+      <a href="#faqs" class="link">자주 묻는 질문</a>
+      <a href="#notices" class="link">공지사항</a>
+      <div style="margin-top:auto" class="kicker muted">이미지는 URL로 붙여넣기 (GitHub/Storage/Imgur)</div>
+    </nav>
+
+    <section class="view">
+      <!-- SETTINGS -->
+      <div id="view-settings" class="card" style="padding:16px">
+        <div class="bar">
+          <h1>사이트 설정</h1>
+          <div class="toolbar">
+            <button id="btnSaveSettings" class="btn primary">저장</button>
+          </div>
+        </div>
+        <div class="grid grid-2">
+          <label>히어로 제목<textarea id="heroTitle" rows="3" placeholder="HTML 허용 (굵게/줄바꿈 등)"></textarea></label>
+          <label>히어로 리드<input id="heroLead" type="text" placeholder="설명 문구"></label>
+          <label>태그(쉼표로 구분)<input id="tags" type="text" placeholder="현장맞춤, 내풍보강, 자동개폐"></label>
+          <label>문의 수신 메일<input id="contactMailTo" type="email" placeholder="contact@example.com"></label>
+        </div>
+        <div id="settingsStatus" class="status"></div>
+      </div>
+
+      <!-- CASES -->
+      <div id="view-cases" class="card hidden" style="padding:16px;margin-top:16px">
+        <div class="bar">
+          <h1>시공사례</h1>
+          <div class="toolbar">
+            <button id="btnNewCase" class="btn">신규</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card" style="padding:12px">
+            <div class="grid grid-2">
+              <label>제목<input id="caseTitle" type="text" placeholder="예: 연동 하우스 신축"></label>
+              <label>정렬(order, 숫자 작을수록 먼저)<input id="caseOrder" type="number" value="100"></label>
+              <label>캡션/설명<input id="caseCaption" type="text" placeholder="자동개폐 포함 · 2025-05-10"></label>
+              <label>이미지 URL<input id="caseImage" type="url" placeholder="https://..."></label>
+            </div>
+            <div class="row right"><button id="btnAddCase" class="btn primary">추가</button></div>
+            <div class="help">* 이미지는 GitHub/Storage/Imgur 등 외부에 올린 후 URL을 붙여넣으세요.</div>
+            <div id="caseFormStatus" class="status"></div>
+          </div>
+
+          <table class="table" id="caseTable">
+            <thead><tr><th style="width:56px">order</th><th>제목</th><th>이미지</th><th style="width:160px">액션</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <div id="view-reviews" class="card hidden" style="padding:16px;margin-top:16px">
+        <div class="bar">
+          <h1>고객후기</h1>
+          <div class="toolbar">
+            <button id="btnNewReview" class="btn">신규</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card" style="padding:12px">
+            <label>제목/요약<input id="reviewTitle" type="text" placeholder="예: 바람 많은 지역도 튼튼합니다."></label>
+            <label>본문(에디터)</label>
+            <div id="reviewEditor" class="editor">
+              <div id="reviewToolbar"></div>
+              <div id="reviewBody" class="ql-editor"></div>
+            </div>
+            <div class="row right"><button id="btnAddReview" class="btn primary">추가</button></div>
+            <div id="reviewFormStatus" class="status"></div>
+          </div>
+
+          <table class="table" id="reviewTable">
+            <thead><tr><th>제목</th><th>미리보기</th><th style="width:160px">액션</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FAQS -->
+      <div id="view-faqs" class="card hidden" style="padding:16px;margin-top:16px">
+        <div class="bar">
+          <h1>자주 묻는 질문</h1>
+          <div class="toolbar">
+            <button id="btnNewFaq" class="btn">신규</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card" style="padding:12px">
+            <label>질문<input id="faqQ" type="text" placeholder="예산은 어느 정도?"></label>
+            <label>답변(에디터)</label>
+            <div id="faqEditor" class="editor">
+              <div id="faqToolbar"></div>
+              <div id="faqBody" class="ql-editor"></div>
+            </div>
+            <div class="row right"><button id="btnAddFaq" class="btn primary">추가</button></div>
+            <div id="faqFormStatus" class="status"></div>
+          </div>
+
+          <table class="table" id="faqTable">
+            <thead><tr><th>질문</th><th>답변</th><th style="width:160px">액션</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- NOTICES -->
+      <div id="view-notices" class="card hidden" style="padding:16px;margin-top:16px">
+        <div class="bar">
+          <h1>공지사항</h1>
+          <div class="toolbar">
+            <button id="btnNewNotice" class="btn">신규</button>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card" style="padding:12px">
+            <div class="grid grid-2">
+              <label>제목<input id="noticeTitle" type="text" placeholder="예: 10월 휴무 안내"></label>
+              <label>대표 이미지(URL) <span class="help">선택</span><input id="noticeCover" type="url" placeholder="https://..."></label>
+            </div>
+            <label>본문(에디터)</label>
+            <div id="noticeEditor" class="editor">
+              <div id="noticeToolbar"></div>
+              <div id="noticeBody" class="ql-editor"></div>
+            </div>
+            <div class="row right"><button id="btnAddNotice" class="btn primary">발행</button></div>
+            <div id="noticeFormStatus" class="status"></div>
+          </div>
+
+          <table class="table" id="noticeTable">
+            <thead><tr><th>제목</th><th>작성일</th><th style="width:160px">액션</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  
+  <!-- Quill -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+  <script>
+    // ===== 0) Firebase 설정 (사용자 환경으로 교체) =====
+    // firebaseConfig.ts 를 쓰고 있다면, 번들에서 아래 객체만 window.firebaseConfig 로 노출하고 이 파일에서 참조해도 됩니다.
+    const firebaseConfig = window.firebaseConfig || {
+      apiKey: "AIzaSyANNpMdqbnQYPPgyCrR9LyBeM5MD7w77jM",
+      authDomain: "woorim-site.firebaseapp.com",
+      projectId: "woorim-site",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+
+    // ===== 공통: DOM =====
+    const $ = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+
+    // ===== 1) Auth =====
+    const authView = $('#authView');
+    const appView  = $('#app');
+    const who = $('#who');
+    const btnSignOut = $('#btnSignOut');
+
+    $('#btnSignIn').addEventListener('click', async () => {
+      const email = $('#inEmail').value.trim();
+      const pw    = $('#inPw').value;
+      $('#authStatus').textContent = '로그인 중...';
+      try{
+        await auth.signInWithEmailAndPassword(email, pw);
+        $('#authStatus').textContent = '';
+      }catch(e){
+        $('#authStatus').textContent = '로그인 실패: ' + e.message;
+      }
+    });
+    btnSignOut.addEventListener('click', ()=>auth.signOut());
+
+    // 관리자 화이트리스트(선택): roles 컬렉션에서 검사
+    async function isAllowed(uid){
+      try{
+        const snap = await db.collection('roles').doc(uid).get();
+        return snap.exists && (snap.data().role === 'admin');
+      }catch(e){ return false; }
+    }
+
+    auth.onAuthStateChanged(async (user)=>{
+      if(!user){
+        appView.classList.add('hidden'); authView.style.display='block'; who.textContent='';
+        return;
+      }
+      // 권한 확인
+      const ok = await isAllowed(user.uid);
+      if(!ok){
+        await auth.signOut();
+        alert('허용되지 않은 계정입니다. 관리자에게 문의하세요.');
+        return;
+      }
+      who.textContent = user.email;
+      authView.style.display='none'; appView.classList.remove('hidden');
+      // 데이터 바인딩 시작
+      bindSettings();
+      bindCases();
+      bindReviews();
+      bindFaqs();
+      bindNotices();
+    });
+
+    // ===== 2) Nav 라우팅 =====
+    const views = {
+      settings: $('#view-settings'),
+      cases:    $('#view-cases'),
+      reviews:  $('#view-reviews'),
+      faqs:     $('#view-faqs'),
+      notices:  $('#view-notices')
+    };
+    function show(hash){
+      const key = (hash||'#settings').replace('#','');
+      Object.values(views).forEach(v=>v.classList.add('hidden'));
+      (views[key]||views.settings).classList.remove('hidden');
+      $$('.side .link').forEach(a=>a.classList.toggle('active', a.getAttribute('href')===`#${key}`));
+    }
+    window.addEventListener('hashchange', ()=>show(location.hash));
+    show(location.hash);
+
+    // ===== 3) SETTINGS (site/settings) =====
+    function bindSettings(){
+      const docRef = db.collection('site').doc('settings');
+      docRef.onSnapshot(snap=>{
+        const s = snap.data()||{};
+        $('#heroTitle').value = s.heroTitle||'';
+        $('#heroLead').value  = s.heroLead||'';
+        $('#tags').value      = (s.tags||[]).join(', ');
+        $('#contactMailTo').value = s.contactMailTo||'';
+      });
+      $('#btnSaveSettings').onclick = async()=>{
+        $('#settingsStatus').textContent = '저장 중...';
+        try{
+          await docRef.set({
+            heroTitle: $('#heroTitle').value,
+            heroLead:  $('#heroLead').value,
+            tags:      $('#tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+            contactMailTo: $('#contactMailTo').value
+          }, {merge:true});
+          $('#settingsStatus').innerHTML = '<span class="badge-ok">저장 완료</span>';
+        }catch(e){
+          $('#settingsStatus').innerHTML = '<span class="badge-err">오류: '+e.message+'</span>';
+        }
+      };
+    }
+
+    // ===== 4) CASES (cases 컬렉션) =====
+    function bindCases(){
+      const T = $('#caseTable tbody');
+      db.collection('cases').orderBy('order','asc').onSnapshot(snap=>{
+        T.innerHTML='';
+        snap.forEach(doc=>{
+          const c = doc.data();
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${c.order ?? ''}</td>
+            <td>${c.title || ''}</td>
+            <td>${c.imageUrl?`<img src="${c.imageUrl}" class="cover">`:''}</td>
+            <td>
+              <div class="row">
+                <button class="btn" data-act="edit">수정</button>
+                <button class="btn danger" data-act="del">삭제</button>
+              </div>
+            </td>`;
+          tr.querySelector('[data-act="edit"]').onclick = ()=>{
+            $('#caseTitle').value = c.title||'';
+            $('#caseCaption').value = c.caption||'';
+            $('#caseImage').value = c.imageUrl||'';
+            $('#caseOrder').value = c.order ?? 100;
+            $('#caseFormStatus').textContent = '편집 모드: '+doc.id;
+            $('#btnAddCase').textContent = '수정 저장';
+            $('#btnAddCase').onclick = async ()=>{
+              $('#caseFormStatus').textContent = '저장 중...';
+              try{
+                await doc.ref.set({
+                  title: $('#caseTitle').value,
+                  caption: $('#caseCaption').value,
+                  imageUrl: $('#caseImage').value,
+                  order: Number($('#caseOrder').value||100)
+                }, {merge:true});
+                $('#caseFormStatus').innerHTML = '<span class="badge-ok">수정 완료</span>';
+                resetCaseForm();
+              }catch(e){
+                $('#caseFormStatus').innerHTML = '<span class="badge-err">오류: '+e.message+'</span>';
+              }
+            };
+          };
+          tr.querySelector('[data-act="del"]').onclick = async()=>{
+            if(!confirm('삭제하시겠어요?')) return;
+            await doc.ref.delete();
+          };
+          T.appendChild(tr);
+        });
+      });
+
+      function resetCaseForm(){
+        $('#caseTitle').value='';$('#caseCaption').value='';$('#caseImage').value='';$('#caseOrder').value=100;
+        $('#btnAddCase').textContent='추가';
+        $('#btnAddCase').onclick = addCase;
+      }
+      async function addCase(){
+        $('#caseFormStatus').textContent='추가 중...';
+        try{
+          await db.collection('cases').add({
+            title: $('#caseTitle').value,
+            caption: $('#caseCaption').value,
+            imageUrl: $('#caseImage').value,
+            order: Number($('#caseOrder').value||100)
+          });
+          $('#caseFormStatus').innerHTML = '<span class="badge-ok">추가 완료</span>';
+          resetCaseForm();
+        }catch(e){
+          $('#caseFormStatus').innerHTML = '<span class="badge-err">오류: '+e.message+'</span>';
+        }
+      }
+      $('#btnAddCase').onclick = addCase;
+      $('#btnNewCase').onclick = ()=>resetCaseForm();
+    }
+
+    // ===== 5) REVIEWS (reviews) =====
+    let reviewQuill;
+    function bindReviews(){
+      reviewQuill = new Quill('#reviewBody', { theme:'snow', modules:{ toolbar:'#reviewToolbar' } });
+      const T = $('#reviewTable tbody');
+      db.collection('reviews').orderBy('order','asc').onSnapshot(snap=>{
+        T.innerHTML='';
+        snap.forEach(doc=>{
+          const r = doc.data();
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${r.title||''}</td>
+            <td class="muted">${(r.bodyHTML||'').replace(/<[^>]+>/g,' ').slice(0,60)}...</td>
+            <td>
+              <div class="row">
+                <button class="btn" data-act="edit">수정</button>
+                <button class="btn danger" data-act="del">삭제</button>
+              </div>
+            </td>`;
+          tr.querySelector('[data-act="edit"]').onclick = ()=>{
+            $('#reviewTitle').value = r.title||'';
+            reviewQuill.root.innerHTML = r.bodyHTML||'';
+            $('#reviewFormStatus').textContent = '편집 모드: '+doc.id;
+            $('#btnAddReview').textContent = '수정 저장';
+            $('#btnAddReview').onclick = async()=>{
+              $('#reviewFormStatus').textContent='저장 중...';
+              try{
+                await doc.ref.set({ title: $('#reviewTitle').value, bodyHTML: reviewQuill.root.innerHTML }, {merge:true});
+                $('#reviewFormStatus').innerHTML='<span class="badge-ok">수정 완료</span>';
+                resetReviewForm();
+              }catch(e){ $('#reviewFormStatus').innerHTML='<span class="badge-err">오류: '+e.message+'</span>'; }
+            };
+          };
+          tr.querySelector('[data-act="del"]').onclick = async()=>{ if(confirm('삭제할까요?')) await doc.ref.delete(); };
+          T.appendChild(tr);
+        });
+      });
+      function resetReviewForm(){ $('#reviewTitle').value=''; reviewQuill.root.innerHTML=''; $('#btnAddReview').textContent='추가'; $('#btnAddReview').onclick=addReview; }
+      async function addReview(){
+        $('#reviewFormStatus').textContent='추가 중...';
+        try{
+          await db.collection('reviews').add({ title: $('#reviewTitle').value, bodyHTML: reviewQuill.root.innerHTML, order: 100 });
+          $('#reviewFormStatus').innerHTML='<span class="badge-ok">추가 완료</span>';
+          resetReviewForm();
+        }catch(e){ $('#reviewFormStatus').innerHTML='<span class="badge-err">오류: '+e.message+'</span>'; }
+      }
+      $('#btnAddReview').onclick = addReview;
+      $('#btnNewReview').onclick = ()=>resetReviewForm();
+    }
+
+    // ===== 6) FAQS (faqs) =====
+    let faqQuill;
+    function bindFaqs(){
+      faqQuill = new Quill('#faqBody', { theme:'snow', modules:{ toolbar:'#faqToolbar' } });
+      const T = $('#faqTable tbody');
+      db.collection('faqs').orderBy('order','asc').onSnapshot(snap=>{
+        T.innerHTML='';
+        snap.forEach(doc=>{
+          const f = doc.data();
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${f.q||''}</td>
+            <td class="muted">${(f.aHTML||'').replace(/<[^>]+>/g,' ').slice(0,60)}...</td>
+            <td>
+              <div class="row">
+                <button class="btn" data-act="edit">수정</button>
+                <button class="btn danger" data-act="del">삭제</button>
+              </div>
+            </td>`;
+          tr.querySelector('[data-act="edit"]').onclick = ()=>{
+            $('#faqQ').value = f.q||'';
+            faqQuill.root.innerHTML = f.aHTML||'';
+            $('#faqFormStatus').textContent = '편집 모드: '+doc.id;
+            $('#btnAddFaq').textContent = '수정 저장';
+            $('#btnAddFaq').onclick = async()=>{
+              $('#faqFormStatus').textContent='저장 중...';
+              try{
+                await doc.ref.set({ q: $('#faqQ').value, aHTML: faqQuill.root.innerHTML }, {merge:true});
+                $('#faqFormStatus').innerHTML='<span class="badge-ok">수정 완료</span>';
+                resetFaqForm();
+              }catch(e){ $('#faqFormStatus').innerHTML='<span class="badge-err">오류: '+e.message+'</span>'; }
+            };
+          };
+          tr.querySelector('[data-act="del"]').onclick = async()=>{ if(confirm('삭제할까요?')) await doc.ref.delete(); };
+          T.appendChild(tr);
+        });
+      });
+      function resetFaqForm(){ $('#faqQ').value=''; faqQuill.root.innerHTML=''; $('#btnAddFaq').textContent='추가'; $('#btnAddFaq').onclick=addFaq; }
+      async function addFaq(){
+        $('#faqFormStatus').textContent='추가 중...';
+        try{
+          await db.collection('faqs').add({ q: $('#faqQ').value, aHTML: faqQuill.root.innerHTML, order:100 });
+          $('#faqFormStatus').innerHTML='<span class="badge-ok">추가 완료</span>';
+          resetFaqForm();
+        }catch(e){ $('#faqFormStatus').innerHTML='<span class="badge-err">오류: '+e.message+'</span>'; }
+      }
+      $('#btnAddFaq').onclick = addFaq;
+      $('#btnNewFaq').onclick = ()=>resetFaqForm();
+    }
+
+    // ===== 7) NOTICES (notices) =====
+    let noticeQuill;
+    function bindNotices(){
+      noticeQuill = new Quill('#noticeBody', { theme:'snow', modules:{ toolbar:'#noticeToolbar' } });
+      const T = $('#noticeTable tbody');
+      db.collection('notices').orderBy('createdAt','desc').onSnapshot(snap=>{
+        T.innerHTML='';
+        snap.forEach(doc=>{
+          const n = doc.data();
+          const tr = document.createElement('tr');
+          const dateStr = (n.createdAt && n.createdAt.toDate) ? n.createdAt.toDate().toLocaleDateString() : (n.createdAt || '-');
+          tr.innerHTML = `
+            <td>${n.title||''}</td>
+            <td>${dateStr}</td>
+            <td>
+              <div class="row">
+                <button class="btn" data-act="edit">수정</button>
+                <button class="btn danger" data-act="del">삭제</button>
+              </div>
+            </td>`;
+          tr.querySelector('[data-act="edit"]').onclick = ()=>{
+            $('#noticeTitle').value = n.title||'';
+            $('#noticeCover').value = n.coverImageUrl||'';
+            noticeQuill.root.innerHTML = n.bodyHTML||'';
+            $('#noticeFormStatus').textContent = '편집 모드: '+doc.id;
+            $('#btnAddNotice').textContent = '수정 저장';
+            $('#btnAddNotice').onclick = async()=>{
+              $('#noticeFormStatus').textContent='저장 중...';
+              try{
+                await doc.ref.set({
+                  title: $('#noticeTitle').value,
+                  coverImageUrl: $('#noticeCover').value || null,
+                  bodyHTML: noticeQuill.root.innerHTML
+                }, {merge:true});
+                $('#noticeFormStatus').innerHTML='<span class="badge-ok">수정 완료</span>';
+                resetNoticeForm();
+              }catch(e){ $('#noticeFormStatus').innerHTML='<span class="badge-err">오류: '+e.message+'</span>'; }
+            };
+          };
+          tr.querySelector('[data-act="del"]').onclick = async()=>{ if(confirm('삭제할까요?')) await doc.ref.delete(); };
+          T.appendChild(tr);
+        });
+      });
+      function resetNoticeForm(){ $('#noticeTitle').value=''; $('#noticeCover').value=''; noticeQuill.root.innerHTML=''; $('#btnAddNotice').textContent='발행'; $('#btnAddNotice').onclick=addNotice; }
+      async function addNotice(){
+        $('#noticeFormStatus').textContent='발행 중...';
+        try{
+          await db.collection('notices').add({
+            title: $('#noticeTitle').value,
+            coverImageUrl: $('#noticeCover').value || null,
+            bodyHTML: noticeQuill.root.innerHTML,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          $('#noticeFormStatus').innerHTML='<span class="badge-ok">발행 완료</span>';
+          resetNoticeForm();
+        }catch(e){ $('#noticeFormStatus').innerHTML='<span class="badge-err">오류: '+e.message+'</span>'; }
+      }
+      $('#btnAddNotice').onclick = addNotice;
+      $('#btnNewNotice').onclick = ()=>resetNoticeForm();
+    }
+  </script>
+
+  <!-- 간단 사용 안내 (보안/규칙) -->
+  <script>
+    /* Firestore Rules (예시) — 콘솔 > Firestore 규칙에 적용
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+        match /roles/{uid} { allow read: if request.auth!=null; allow write: if false; }
+        function isAdmin(){ return exists(/databases/$(database)/documents/roles/$(request.auth.uid)) && get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.role == 'admin'; }
+        match /site/{doc} { allow read: if true; allow write: if request.auth!=null && isAdmin(); }
+        match /{colName=cases|reviews|faqs|notices}/{doc} {
+          allow read: if true;
+          allow write, update, delete: if request.auth!=null && isAdmin();
+        }
+      }
+    }
+    */
+  </script>
+</body>
+</html>
