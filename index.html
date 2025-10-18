@@ -1,359 +1,572 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" id="viewportMeta" content="width=device-width, initial-scale=1" />
-<title>우림비닐하우스 · 맞춤형 시공/설계/보수 전문</title>
-<meta name="description" content="현장 맞춤 설계·시공·보수까지 원스톱. 사례/가격/후기 한 화면에 확인하고 바로 상담 받으세요." />
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" id="viewportMeta" content="width=device-width, initial-scale=1" />
+  <title>우림비닐하우스 · 맞춤형 시공/설계/보수 전문</title>
+  <meta name="description" content="현장 맞춤 설계·시공·보수까지 원스톱. 사례/가격/후기 한 화면에 확인하고 바로 상담 받으세요." />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#5A7F71; --brand-ink:#35564a; --accent:#A3B18A;
+      --bg:#ffffff; --text:#1f2937; --muted:#6b7280;
+      --card:#F8FAF9; --line:#e6eae7;
+      --radius:16px; --shadow:0 10px 30px rgba(0,0,0,0.08);
+      --container:1040px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.7;word-break:keep-all}
+    a{color:var(--brand);text-decoration:none}
+    img{max-width:100%;height:auto;border-radius:12px;display:block}
+    .container{max-width:var(--container);margin:0 auto;padding:0 16px}
 
-<style>
-:root{
-  --brand:#5A7F71; --brand-ink:#35564a; --accent:#A3B18A;
-  --bg:#ffffff; --text:#1f2937; --muted:#6b7280;
-  --card:#F8FAF9; --line:#e6eae7;
-  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.08);
-  --container:1040px;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.7}
-a{color:var(--brand);text-decoration:none}
-img{max-width:100%;height:auto;border-radius:12px;display:block}
-.container{max-width:var(--container);margin:0 auto;padding:0 16px}
+    /* Header */
+    header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;min-height:56px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--text)}
+    .logo-badge{width:28px;height:28px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:.9rem}
+    .btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:12px 16px;border-radius:999px;background:var(--brand);color:#fff;font-weight:800;border:0;cursor:pointer;box-shadow:var(--shadow);transition:.18s}
+    .btn:hover{filter:brightness(.96)}
+    .btn.alt{background:#fff;color:var(--brand);border:2px solid var(--brand)}
 
-/* Header */
-header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;min-height:56px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900}
-.logo-badge{width:28px;height:28px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:.9rem}
-.btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:12px 16px;border-radius:999px;background:var(--brand);color:#fff;font-weight:800;border:0;cursor:pointer;box-shadow:var(--shadow);transition:.18s}
-.btn:hover{filter:brightness(.96)}
-.btn.alt{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+    /* Hero */
+    .hero{padding:58px 0;background:radial-gradient(900px 230px at 50% -120px, rgba(90,127,113,.10), transparent 60%)}
+    .hero h1{font-size:28px;line-height:1.25;margin:0 0 10px}
+    .hero .lead{color:var(--muted);margin:0 0 16px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+    .tag{padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:999px;color:#253528}
 
-/* Hero */
-.hero{padding:58px 0;background:radial-gradient(900px 230px at 50% -120px, rgba(90,127,113,.10), transparent 60%)}
-.hero h1{font-size:28px;line-height:1.25;margin:0 0 10px}
-.hero .lead{color:var(--muted);margin:0 0 16px}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
-.tag{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:12px}
-@media(min-width:900px){ .hero h1{font-size:40px} }
+    /* Sections */
+    section{padding:46px 0}
+    h2{font-size:22px;margin:0 0 14px;color:#253528}
 
-/* Section base */
-section{padding:42px 0}
-h2{font-size:22px;margin:0 0 12px}
-.muted{color:var(--muted)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-.grid{display:grid;gap:14px}
-.grid-2{grid-template-columns:1fr}
-.grid-3{grid-template-columns:1fr}
-@media(min-width:760px){ .grid-2{grid-template-columns:repeat(2,1fr)} }
-@media(min-width:980px){ .grid-3{grid-template-columns:repeat(3,1fr)} }
+    /* Cases Carousel (drag + auto, no visible scrollbar) */
+    #cases .carousel{position:relative}
+    #cases .slides{
+      display:flex; gap:12px; overflow:auto; scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch; padding-bottom:6px; scroll-behavior:smooth;
+      -ms-overflow-style:none; scrollbar-width:none;
+    }
+    #cases .slides::-webkit-scrollbar{ display:none }
+    #cases .slides .card{flex:0 0 88%;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    @media(min-width:720px){ #cases .slides .card{flex-basis:48%} }
+    @media(min-width:1024px){ #cases .slides .card{flex-basis:32%} }
+    .case-thumb{aspect-ratio:16/9;background:#eee}
+    .case-thumb img{width:100%;height:100%;object-fit:cover;border-radius:0}
+    .case-body{padding:12px 14px}
+    .case-title{margin:0 0 6px;font-weight:900}
+    .case-sub{margin:0;color:var(--muted)}
 
-/* Benefit */
-.benefit{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line)}
-.benefit .ico{flex:0 0 38px;height:38px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:#253528;font-weight:900}
+    /* Pricing */
+    .grid{display:grid;gap:12px}
+    .grid-2{grid-template-columns:1fr}
+    .grid-3{grid-template-columns:1fr}
+    @media(min-width:720px){ .grid-2{grid-template-columns:1fr 1fr} .grid-3{grid-template-columns:1fr 1fr 1fr} }
+    .price{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .price .head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff}
+    .price h3{margin:0;font-size:16px;color:#253528}
+    .price .num{font-weight:900;color:#35564a;font-size:20px}
+    .price .body{padding:12px 16px;display:grid;gap:8px}
+    .check{display:flex;gap:8px;align-items:center}
+    .check:before{content:"✔";color:#35564a;font-weight:900}
 
-/* 캐러셀 기본 */
-#caseCarousel.carousel{ --gap:12px; position:relative; overflow:hidden; }
-#caseCarousel .slides{
-  display:flex;
-  gap:var(--gap);
-  transition:transform .5s ease;
-}
+    /* Reviews (pretty cards + load more) */
+    .reviews{ display:grid; gap:12px }
+    @media(min-width:720px){ .reviews{ grid-template-columns:1fr 1fr } }
+    .review.card{
+      background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+      display:grid;grid-template-columns:96px 1fr;
+    }
+    .review .thumb{ background:#f1f5f9; width:96px; height:100%; display:grid; place-items:center }
+    .review .thumb img{ width:100%; height:100%; object-fit:cover; border-radius:0 }
+    .review .body{ padding:12px 14px }
+    .review .title{ margin:0 0 6px; font-weight:900; color:#253528 }
+    .review .meta{ color:var(--muted); font-size:12px; margin:0 0 8px }
+    .stars{ display:inline-flex; gap:2px; font-size:14px; color:#f59e0b; vertical-align:middle }
+    #moreReviewsWrap{display:flex;justify-content:center;margin-top:8px}
 
-/* 모든 카드 동일 폭 고정 */
-#caseCarousel .card{
-  flex:0 0 100%;         /* 한 화면에 1장씩 */
-  min-width:100%;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
-  overflow:hidden;
-}
+    /* Form (mobile-safe) */
+    #inquiry{gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+    #inquiry label{display:grid;gap:6px;font-weight:600;min-width:0}
+    #inquiry label span{font-size:13px;color:var(--muted)}
+    #inquiry input,#inquiry textarea{
+      width:100%;min-width:0;padding:12px 14px;border:1px solid var(--line);
+      border-radius:12px;background:#fff;font:inherit;outline:none;transition:border-color .2s, box-shadow .2s
+    }
+    #inquiry textarea{min-height:120px;resize:vertical}
+    #inquiry input:focus,#inquiry textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(90,127,113,.12)}
+    #inquiry .row-actions{display:flex;gap:8px;flex-wrap:wrap}
+    #inquiry .row-actions .btn{flex:1}
+    @media(min-width:720px){
+      #inquiry{display:grid;grid-template-columns:1fr 1fr}
+      #inquiry .full{grid-column:1/-1}
+      #inquiry .row-actions{grid-column:1/-1}
+    }
+    #formStatus{margin:2px 0 0;color:var(--muted);font-size:13px}
 
-/* 이미지 고정 비율 (16:9) */
-#caseCarousel .card .media{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  overflow:hidden;
-}
-#caseCarousel .card .media img{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover; display:block;
-}
+    /* FAQ (with minimal chevron SVG) */
+    #faqs{display:grid; gap:10px}
+    details{
+      background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden;
+      transition:box-shadow .2s, border-color .2s;
+      word-break:break-word;
+    }
+    details[open]{ box-shadow:var(--shadow); border-color:#dfe6e2 }
+    summary{
+      list-style:none; cursor:pointer; user-select:none; padding:12px 16px;
+      display:flex; align-items:center; gap:8px; font-weight:800; color:#253528; outline:none;
+    }
+    summary::-webkit-details-marker{ display:none }
+    .faq-caret{
+      width:18px;height:18px; color:#9aa7a0; flex:0 0 18px;
+      transition:transform .2s ease, color .2s ease;
+    }
+    details[open] .faq-caret{ transform:rotate(90deg); color:#5a7f71 }
+    .faq-body{ padding:0 16px 14px; color:var(--muted) }
+    .faq-body > *:first-child{ margin-top:0 }
+    .faq-body > *:last-child{ margin-bottom:0 }
 
-/* 캡션 영역 기본 */
-#caseCarousel .card .caption{ padding:12px 14px; }
+    /* Footer */
+    footer{
+      border-top:1px solid var(--line);
+      background:linear-gradient(180deg,#fff,#f8faf9);
+      color:var(--text);
+    }
+    .footer-wrap{max-width:var(--container); margin:0 auto; padding:28px 16px}
+    .footer-grid{ display:grid; gap:18px; grid-template-columns:1fr }
+    @media(min-width:720px){ .footer-grid{ grid-template-columns:1.1fr .9fr .9fr } }
+    .f-col h4{margin:0 0 10px;color:#253528}
+    .f-brand{display:flex; gap:12px; align-items:flex-start}
+    .f-logo{min-width:36px;width:36px;height:36px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:900}
+    .f-title{margin:0;font-weight:900}
+    .f-lead{margin:2px 0 12px; color:var(--muted); font-size:14px}
+    .f-list{list-style:none; padding:0; margin:0; display:grid; gap:8px}
+    .f-list a{color:var(--text)}
+    .f-list a:hover{color:var(--brand)}
+    .f-biz{display:grid; gap:6px; font-size:14px; color:var(--muted)}
+    .f-biz b{color:var(--text); font-weight:700}
+    .f-bottom{
+      display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between;
+      align-items:center; margin-top:18px; padding-top:14px; border-top:1px solid var(--line); font-size:13px; color:var(--muted)
+    }
+    .f-social{display:flex; gap:10px}
+    .f-chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border:1px solid var(--line); border-radius:999px; background:#fff;
+      color:#35564a; font-weight:700;
+    }
 
-/* Pricing */
-.price{display:grid;gap:10px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
-.price .head{padding:16px;background:linear-gradient(180deg,#f2f6f3,#ffffff)}
-.price .num{font-weight:900;color:var(--brand-ink);font-size:20px}
-.price .body{padding:12px 16px;display:grid;gap:8px}
-.check{display:flex;gap:8px;align-items:center}
-.check:before{content:"✔";color:var(--brand-ink);font-weight:900}
+    /* Sticky CTA */
+    .sticky-cta{position:sticky;bottom:0;z-index:35;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(10px);border-top:1px solid var(--line);padding:10px}
+    .sticky-cta .row{display:flex;gap:8px}
+    .sticky-cta .row .btn{flex:1}
 
-/* Reviews & FAQ */
-.review{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
-details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
-details+details{margin-top:8px}
-summary{cursor:pointer;font-weight:800;color:#253528}
-
-/* Sticky CTA */
-.sticky-cta{position:sticky;bottom:0;z-index:35;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(10px);border-top:1px solid var(--line);padding:10px}
-.sticky-cta .row{display:flex;gap:8px}
-.sticky-cta .row .btn{flex:1}
-
-/* Scroll reveal */
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease, transform .55s ease}
-.reveal.visible{opacity:1;transform:none}
-
-/* Form (문의) */
-#inquiry{gap:16px;background:#fff}
-#inquiry label{display:grid;gap:8px;font-weight:600}
-#inquiry label span{font-size:13px;color:var(--muted)}
-#inquiry input, #inquiry textarea{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#fff;
-  font:inherit;
-  outline:none;
-  transition:border-color .2s, box-shadow .2s;
-}
-#inquiry textarea{min-height:120px;resize:vertical}
-#inquiry input:focus, #inquiry textarea:focus{
-  border-color:var(--brand);
-  box-shadow:0 0 0 4px rgba(90,127,113,.12);
-}
-#formStatus{margin:4px 0 0}
-</style>
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease, transform .55s ease}
+    .reveal.visible{opacity:1;transform:none}
+  </style>
 </head>
 <body>
-<header>
-  <div class="container nav">
-    <a class="logo" href="#home"><span class="logo-badge">GH</span> 우림비닐하우스</a>
-    <a class="btn alt" href="#contact">무료 상담</a>
-  </div>
-</header>
-
-<main id="home">
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h1 class="reveal">현장에 딱 맞춘 <span style="color:var(--brand)">비닐하우스</span>,<br>설계·시공·보수까지 한 번에</h1>
-      <p class="lead reveal">견적 뽑기 전, <b>사례·가격·후기</b>만 빠르게 보고 결정하세요.</p>
-      <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap">
-        <a class="btn" href="#contact">바로 상담 받기</a>
-        <a class="btn alt" href="#cases">사례 먼저 보기</a>
-      </div>
-      <div class="tags reveal">
-        <span class="tag">현장맞춤 설계</span><span class="tag">내풍/적설 보강</span><span class="tag">자동개폐/관수</span><span class="tag">사후관리</span>
-      </div>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#home"><img src="logo.png" style="height:40px;"></a>
+      <a class="btn alt" href="#contact">무료 상담</a>
     </div>
-  </section>
+  </header>
 
-  <!-- Benefits -->
-  <section>
-    <div class="container">
-      <h2 class="reveal">필요한 것만, 핵심만 제공합니다</h2>
-      <div class="grid grid-3">
-        <div class="benefit reveal"><div class="ico">1</div><div><b>현장 진단 포함</b><br>과투자 없이 꼭 필요한 사양만 제안.</div></div>
-        <div class="benefit reveal"><div class="ico">2</div><div><b>견적 투명 공시</b><br>예상 밖 추가비용 최소화.</div></div>
-        <div class="benefit reveal"><div class="ico">3</div><div><b>A/S·유지관리</b><br>무상 A/S 및 정기 점검 지원.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cases Carousel (스와이프) -->
-  <section id="cases">
-    <div class="container">
-      <h2 class="reveal">시공사례</h2>
-      <div class="carousel reveal" id="caseCarousel">
-        <div class="slides">
-          <!-- via.placeholder.com 샘플 (텍스트는 URL 인코딩됨) -->
-          <article class="card case">
-            <div class="media">
-            <img src="https://via.placeholder.com/1200x675.png?text=%EC%97%B0%EB%8F%99%20%ED%95%98%EC%9A%B0%EC%8A%A4%20%EC%8B%A0%EC%B6%95" alt="연동 하우스 신축">
-            </div>
-            <div class="caption"><h3>연동 하우스 신축</h3><p class="muted">자동개폐 포함 · 2025-05-10</p></div>
-          </article>
-          <article class="card case">
-            <div class="media">
-            <img src="https://via.placeholder.com/1200x675.png?text=%EB%8B%A8%EB%8F%99%20%ED%95%98%EC%9A%B0%EC%8A%A4%20%EB%B3%B4%EA%B0%95" alt="단동 하우스 보강">
-            </div>
-            <div class="caption"><h3>단동 하우스 보강</h3><p class="muted">골조 보강 및 피복 교체 · 2025-03-22</p></div>
-          </article>
-          <article class="card case">
-            <div class="media">
-            <img src="https://via.placeholder.com/1200x675.png?text=%EA%B4%80%EC%88%98%2F%ED%99%98%EA%B2%BD%20%EC%9E%90%EB%8F%99%ED%99%94" alt="관수/환경 자동화">
-            </div>
-            <div class="caption"><h3>관수/환경 자동화</h3><p class="muted">효율 개선 · 2025-04-03</p></div>
-          </article>
+  <main id="home">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="reveal" data-cms-key="hero-title">현장에 딱 맞춘 <span style="color:var(--brand)">비닐하우스</span>,<br>설계·시공·보수까지 한 번에</h1>
+        <p class="lead reveal" data-cms-key="hero-lead">견적 뽑기 전, <b>사례·가격·후기</b>만 빠르게 보고 결정하세요.</p>
+        <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="#contact">바로 상담</a>
+          <a class="btn alt" href="#cases">시공사례 보기</a>
+        </div>
+        <div class="tags reveal">
+          <div class="tag">설계·시공·보수</div>
+          <div class="tag">자동개폐</div>
+          <div class="tag">연동/단동</div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Pricing -->
-  <section id="pricing">
-    <div class="container">
-      <h2 class="reveal">대략 견적(부가세 별도)</h2>
-      <div class="price reveal">
-        <div class="head"><h3>연동 하우스(중형)</h3><div class="num">₩6,500,000 ~</div></div>
-        <div class="body">
-          <div class="check">구조 보강/기초 강화</div>
-          <div class="check">측창·환기 최적화</div>
-          <div class="check">유지관리 가이드 제공</div>
-          <a class="btn" href="#contact" style="margin-top:6px;justify-content:center">내 현장 기준 견적 받기</a>
+    <!-- Cases Carousel -->
+    <section id="cases">
+      <div class="container">
+        <h2 class="reveal" data-cms-key="cases-title">시공사례</h2>
+        <div class="carousel reveal" id="caseCarousel">
+          <div class="slides" id="caseSlides"></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Reviews -->
-  <section>
-    <div class="container">
-      <h2 class="reveal">고객 후기</h2>
-      <div class="grid grid-2">
-        <div class="review reveal"><b>“바람 많은 지역도 튼튼합니다.”</b><p class="muted">태풍 지나가도 문제 없었어요.</p></div>
-        <div class="review reveal"><b>“견적이 깔끔해서 믿음이 갔어요.”</b><p class="muted">세부 설명이 안심을 줬습니다.</p></div>
+    <!-- Pricing -->
+    <section id="pricing">
+      <div class="container">
+        <h2 class="reveal" data-cms-key="pricing-title">대략 견적(부가세 별도)</h2>
+        <div class="grid grid-3 reveal" data-cms-key="pricing-grid">
+          <div class="price">
+            <div class="head"><h3>단동 하우스(소형)</h3><div class="num">₩3,200,000 ~</div></div>
+            <div class="body">
+              <div class="check">기초 공사 포함</div>
+              <div class="check">측창 및 환기창 기본형</div>
+              <div class="check">간단한 내부 설비 포함</div>
+              <a class="btn" href="#contact" style="margin-top:6px;justify-content:center">내 현장 기준 견적 받기</a>
+            </div>
+          </div>
+          <div class="price">
+            <div class="head"><h3>연동 하우스(중형)</h3><div class="num">₩6,500,000 ~</div></div>
+            <div class="body">
+              <div class="check">구조 보강/기초 강화</div>
+              <div class="check">측창·환기 최적화</div>
+              <div class="check">유지관리 가이드 제공</div>
+              <a class="btn" href="#contact" style="margin-top:6px;justify-content:center">내 현장 기준 견적 받기</a>
+            </div>
+          </div>
+          <div class="price">
+            <div class="head"><h3>스마트 하우스(대형)</h3><div class="num">₩12,000,000 ~</div></div>
+            <div class="body">
+              <div class="check">자동개폐 / IoT 제어</div>
+              <div class="check">단열 및 난방 시스템 포함</div>
+              <div class="check">원격 모니터링 지원</div>
+              <a class="btn" href="#contact" style="margin-top:6px;justify-content:center">내 현장 기준 견적 받기</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ -->
-  <section>
-    <div class="container">
-      <h2 class="reveal">자주 묻는 질문</h2>
-      <details class="reveal"><summary>예산은 어느 정도?</summary><p class="muted">현장 진단 후 정확히 안내드립니다.</p></details>
-      <details class="reveal"><summary>시공 기간은?</summary><p class="muted">규모에 따라 3일~2주.</p></details>
-      <details class="reveal"><summary>A/S는?</summary><p class="muted">무상 A/S + 정기 점검 옵션.</p></details>
-    </div>
-  </section>
+    <!-- Reviews -->
+    <section>
+      <div class="container">
+        <h2 class="reveal" data-cms-key="reviews-title">고객 후기</h2>
+        <div id="reviews" class="reviews"></div>
+        <div id="moreReviewsWrap"></div>
+      </div>
+    </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <div class="container">
-      <h2 class="reveal">상담 요청</h2>
-      <form id="inquiry" class="grid grid-2 card reveal">
-        <label><span>이름</span><input name="name" required placeholder="홍길동"/></label>
-        <label><span>연락처</span><input name="phone" required placeholder="010-0000-0000"/></label>
-        <label style="grid-column:1/-1"><span>요청</span><textarea name="need" placeholder="예: 연동 신축 / 자동개폐 포함 / 현장주소 ..."></textarea></label>
-        <div style="grid-column:1/-1;display:flex;gap:8px"><button class="btn" type="submit">메일로 보내기</button></div>
-        <p id="formStatus" class="muted"></p>
-      </form>
-    </div>
-  </section>
+    <!-- FAQ -->
+    <section>
+      <div class="container">
+        <h2 class="reveal" data-cms-key="faqs-title">자주 묻는 질문</h2>
+        <div id="faqs"></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="reveal" data-cms-key="contact-title">상담 요청</h2>
+
+        <form id="inquiry" class="reveal">
+          <label>
+            <span>이름</span>
+            <input name="name" required placeholder="홍길동"/>
+          </label>
+          <label>
+            <span>연락처</span>
+            <input name="phone" required placeholder="010-0000-0000"/>
+          </label>
+          <label class="full">
+            <span>비고(요청사항)</span>
+            <textarea name="note" placeholder="예: 연동 신축 / 자동개폐 포함 / 현장주소 등"></textarea>
+          </label>
+          <div class="row-actions">
+            <button class="btn" type="submit">스프레드시트로 보내기</button>
+          </div>
+          <p id="formStatus" class="full"></p>
+        </form>
+
+      </div>
+    </section>
+  </main>
 
   <!-- Sticky CTA -->
   <div class="sticky-cta">
-    <div class="container"><div class="row"><a class="btn" href="#contact">상담 요청</a><a class="btn alt" href="#pricing">견적</a></div></div>
+    <div class="container"><div class="row">
+      <a class="btn" href="#contact">상담 요청</a>
+      <a class="btn alt" href="#pricing">견적</a>
+    </div></div>
   </div>
-</main>
 
-<footer>
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-top:1px solid var(--line)">
-    <span class="muted">© <span id="y"></span> 우림비닐하우스</span>
-  </div>
-</footer>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-wrap">
+      <div class="footer-grid">
+        <div class="f-col">
+          <div class="f-brand">
+            <div class="f-logo">GH</div>
+            <div>
+              <h3 class="f-title">우림비닐하우스</h3>
+              <p class="f-lead">현장 맞춤 설계·시공·보수까지 한 번에, 사례·가격·후기 한 화면에서.</p>
+              <div class="f-chip">상담 <span id="fPhone">—</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="f-col">
+          <h4>바로가기</h4>
+          <ul class="f-list">
+            <li><a href="#cases">시공사례</a></li>
+            <li><a href="#pricing">대략 견적</a></li>
+            <li><a href="#contact">상담 요청</a></li>
+            <li><a id="fBlog" href="#" target="_blank" rel="noopener" style="display:none">블로그</a></li>
+          </ul>
+        </div>
+        <div class="f-col">
+          <h4>사업자 정보</h4>
+          <div class="f-biz" id="fBiz">
+            <div><b>상호</b> <span id="bizName">—</span></div>
+            <div><b>대표</b> <span id="bizOwner">—</span></div>
+            <div><b>사업자등록번호</b> <span id="bizRegNo">—</span></div>
+            <div><b>주소</b> <span id="bizAddr">—</span></div>
+            <div><b>기타</b> <span id="bizEtc">—</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="f-bottom">
+        <div>© <span id="y"></span> 우림비닐하우스</div>
+        <div class="f-social">
+          <a id="fMap" href="#" target="_blank" rel="noopener" style="display:none">오시는 길</a>
+          <a id="fAdmin" href="/admin.html">관리자</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-<script>
-// Year
-document.getElementById('y').textContent = new Date().getFullYear();
+  <!-- Firebase SDK (v10) -->
+  <script type="module">
+    import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-// Scroll reveal
-(function(){
-  const els=document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver'in window)){els.forEach(el=>el.classList.add('visible'));return;}
-  const io=new IntersectionObserver((entries,ob)=>{
-    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');ob.unobserve(en.target);}});
-  },{threshold:0.12});
-  els.forEach(el=>io.observe(el));
-})();
+    // ===== Google Apps Script Web App URL (스프레드시트 적재) =====
+    // ▶▶ 본인 웹앱 배포 URL로 교체하세요.
+    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec";
 
-// Form mailto
-document.getElementById('inquiry').addEventListener('submit',e=>{
-  e.preventDefault();
-  const f=new FormData(e.target);
-  const body=`이름:${f.get('name')}\n연락처:${f.get('phone')}\n요청:${f.get('need')}`;
-  const subject=encodeURIComponent('[상담요청]');
-  location.href=`mailto:contact@example.com?subject=${subject}&body=${encodeURIComponent(body)}`;
-  document.getElementById('formStatus').textContent='메일 앱이 열리지 않으면 전화로 문의해주세요.';
-});
+    // ===== Firebase =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyANNpMdqbnQYPPgyCrR9LyBeM5MD7w77jM",
+      authDomain: "woorim-site.firebaseapp.com",
+      projectId: "woorim-site",
+      storageBucket: "woorim-site.appspot.com",
+      messagingSenderId: "1048438590071",
+      appId: "1:1048438590071:web:653737eef80b205e57d472"
+    };
+    const app = getApps()[0] || initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-/* === Carousel: 모바일 스와이프/데스크톱 드래그 (fixed) === */
-(function(){
-  const wrap = document.getElementById('caseCarousel');
-  if(!wrap) return;
-  const track = wrap.querySelector('.slides');
-  const cards = [...track.children];
+    // Reveal
+    const io = new IntersectionObserver((es)=> es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} }), {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-  let idx = 0, startX = 0, curX = 0, dragging = false;
-  let width = wrap.clientWidth, gap = 0;
+    // Sanitize
+    function sanitizeStrict(html=''){
+      const ALLOWED = new Set(['B','I','U','STRONG','EM','P','BR','UL','OL','LI','A','SPAN','H1','H2','H3','H4','H5','H6','BLOCKQUOTE','DIV']);
+      const box = document.createElement('div'); box.innerHTML = html || '';
+      box.querySelectorAll('script, style, iframe, object, embed').forEach(el=>el.remove());
+      (function walk(node){
+        if(node.nodeType!==1) return; const tag=node.tagName;
+        if(!ALLOWED.has(tag)){ const p=node.parentNode; if(!p) return; while(node.firstChild) p.insertBefore(node.firstChild,node); p.removeChild(node); return; }
+        let href=''; if(tag==='A'&&node.hasAttribute('href')){ try{ const u=new URL(node.getAttribute('href'), location.origin); if(['http:','https:','mailto:','tel:'].includes(u.protocol)) href=u.toString(); }catch{} }
+        [...node.attributes].forEach(a=>node.removeAttribute(a.name)); if(href) node.setAttribute('href', href);
+        [...node.children].forEach(walk);
+      })(box);
+      return box.innerHTML;
+    }
 
-  function readGap(){
-    const cs = getComputedStyle(track);
-    gap = parseFloat(cs.columnGap || cs.gap || 0) || 0;
-  }
+    // CMS 적용 (옵션)
+    const CMS_DOC = doc(db,'cms','home');
+    async function applyCmsOnce(){
+      try{
+        const snap = await getDoc(CMS_DOC); const content = (snap.data()||{}).content||{};
+        document.querySelectorAll('[data-cms-key]').forEach(el=>{
+          const key = el.getAttribute('data-cms-key'); const val = content?.[key];
+          if(typeof val==='string' && val.trim()!==''){
+            if(el.tagName==='IMG') el.src = val.trim(); else el.innerHTML = sanitizeStrict(val);
+          }
+        });
+      }catch(e){ console.log('[SAFE] applyCmsOnce:', e.message); }
+    }
+    applyCmsOnce();
 
-  function unit(){          // 한 장 이동 거리(px)
-    return width + gap;     // 컨테이너 폭 + gap 만큼 이동
-  }
+    // 사례
+    async function loadCases(){
+      const list = document.getElementById('caseSlides'); if(!list) return; list.innerHTML='';
+      const col = collection(db,'cases'); let items=[];
+      try{
+        const q = query(col, where('published','==', true), orderBy('order','asc'));
+        const snap = await getDocs(q); snap.forEach(d=> items.push(d.data()));
+      }catch(e){
+        const snap = await getDocs(query(col, orderBy('order','asc')));
+        snap.forEach(d=>{ const x=d.data(); if(x.published===true) items.push(x); });
+      }
+      items.forEach(c=>{
+        const card = document.createElement('article'); card.className='card';
+        const img = c.imageUrl ? `<img src="${c.imageUrl}" alt="${c.title||''}">` : '';
+        card.innerHTML = `<div class="case-thumb">${img}</div><div class="case-body"><div class="case-title">${c.title||''}</div><p class="case-sub">${c.subtitle||c.caption||''}</p></div>`;
+        list.appendChild(card);
+      });
+      initCarousel();
+    }
 
-  function to(i, animate=true){
-    const count = cards.length;
-    idx = (i + count) % count;
-    track.style.transition = animate ? 'transform .5s ease' : 'none';
-    track.style.transform = `translateX(${-idx * unit()}px)`;
-  }
+    // 후기: 4개씩 더보기
+    const REVIEWS_PAGE = 4;
+    let _reviewDocs = [];
+    async function loadReviews(){
+      const wrap = document.getElementById('reviews'); if(!wrap) return; wrap.innerHTML='';
+      _reviewDocs = [];
+      const snap = await getDocs(query(collection(db,'reviews'), orderBy('order','asc')));
+      snap.forEach(d=> _reviewDocs.push(d.data()));
+      if (_reviewDocs.length === 0) {
+        const empty = document.createElement('div'); empty.className='muted'; empty.textContent='아직 등록된 후기가 없습니다.'; wrap.appendChild(empty); return;
+      }
+      renderMoreReviews(true);
+    }
+    function renderMoreReviews(reset=false){
+      const wrap = document.getElementById('reviews'); const moreWrap = document.getElementById('moreReviewsWrap');
+      if(reset){ wrap.innerHTML=''; moreWrap.innerHTML=''; renderMoreReviews._i = 0; }
+      const start = renderMoreReviews._i || 0;
+      const next = _reviewDocs.slice(start, start + REVIEWS_PAGE);
+      next.forEach(r=>{
+        const title = r.title || '고객 후기';
+        const body  = (r.bodyHTML || r.bodyHtml || '').trim();
+        const img   = (r.imageUrl || '').trim();
+        const rating = Number(r.rating || 0);
 
-  function onResize(){
-    width = wrap.clientWidth;
-    readGap();
-    to(idx, false);
-  }
+        const card = document.createElement('article'); card.className='review card';
+        card.innerHTML = `
+          <div class="thumb">${img ? `<img src="${img}" alt="">` : `🗨️`}</div>
+          <div class="body">
+            <h3 class="title">${title}</h3>
+            <p class="meta">${rating ? `<span class="stars">${'★'.repeat(rating)}${'☆'.repeat(Math.max(0,5-rating))}</span>` : ''}</p>
+            <div class="content">${sanitizeStrict(body)}</div>
+          </div>`;
+        wrap.appendChild(card);
+      });
+      renderMoreReviews._i = start + next.length;
+      if(renderMoreReviews._i < _reviewDocs.length){
+        moreWrap.innerHTML = `<button class="btn alt" id="btnMoreReviews" type="button">후기 더보기</button>`;
+        document.getElementById('btnMoreReviews').onclick = ()=> renderMoreReviews(false);
+      }else{
+        moreWrap.innerHTML = '';
+      }
+    }
 
-  // 초기 세팅
-  readGap();
-  to(0, false);
-  window.addEventListener('resize', onResize);
+    // FAQ (with SVG chevron)
+    async function loadFaqs(){
+      const list = document.getElementById('faqs'); if(!list) return; list.innerHTML='';
+      const snap = await getDocs(query(collection(db,'faqs'), orderBy('order','asc')));
+      snap.forEach(d=>{
+        const f=d.data();
+        const q=(f.q||'').toString();
+        const a=(f.aHTML||f.aHtml||'');
+        const el=document.createElement('details');
+        el.innerHTML = `
+          <summary>
+            <svg class="faq-caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5l8 7-8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>${q}</span>
+          </summary>
+          <div class="faq-body">${sanitizeStrict(a)}</div>`;
+        list.appendChild(el);
+      });
+    }
 
-  // 드래그/스와이프
-  function down(x){ dragging=true; startX=x; curX=x; track.style.transition='none'; }
-  function move(x){
-    if(!dragging) return;
-    curX = x;
-    const dx = curX - startX; // px
-    track.style.transform = `translateX(${-idx*unit() + dx}px)`;
-  }
-  function up(){
-    if(!dragging) return;
-    dragging=false;
-    const dx = curX - startX;
-    const threshold = width * 0.18; // 18% 넘기면 다음/이전
-    if(Math.abs(dx) > threshold){ to(idx + (dx < 0 ? 1 : -1), true); }
-    else { to(idx, true); }
-  }
+    // ===== 문의: 스프레드시트 전송 (GAS) =====
+    async function submitToSheet(payload){
+      const st = document.getElementById('formStatus');
+      st.textContent = '전송 중입니다…';
+      const data = {
+        date: new Date().toISOString(),
+        name: payload.name || '',
+        phone: payload.phone || '',
+        note: payload.note || ''
+      };
+      try{
+        const res = await fetch(GAS_WEBAPP_URL, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(data),
+          mode:'cors'
+        });
+        const json = await res.json().catch(()=> ({}));
+        if(res.ok && (json.ok !== false)){
+          st.textContent = '접수되었습니다. 빠르게 연락드릴게요.';
+          document.getElementById('inquiry').reset();
+        }else{
+          st.textContent = '전송 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+        }
+      }catch(e){
+        st.textContent = '네트워크 오류입니다. 연결을 확인해 주세요.';
+      }
+    }
+    document.getElementById('inquiry')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const fd = new FormData(e.currentTarget);
+      submitToSheet(Object.fromEntries(fd.entries()));
+    });
 
-  // 터치
-  track.addEventListener('touchstart', e=>down(e.touches[0].clientX), {passive:true});
-  track.addEventListener('touchmove',  e=>move(e.touches[0].clientX), {passive:true});
-  track.addEventListener('touchend',   up);
-  // 마우스
-  track.addEventListener('mousedown', e=>{e.preventDefault();down(e.clientX);});
-  window.addEventListener('mousemove', e=>move(e.clientX));
-  window.addEventListener('mouseup', up);
+    // Carousel: drag + auto-slide
+    function initCarousel(){
+      const track = document.getElementById('caseSlides');
+      if(!track) return;
 
-  // 자동 롤링
-  let timer = setInterval(()=>to(idx+1), 5000);
-  wrap.addEventListener('mouseenter', ()=>clearInterval(timer));
-  wrap.addEventListener('mouseleave', ()=>{timer=setInterval(()=>to(idx+1),5000);});
-})();
-</script>
+      let isDown=false, startX=0, startScroll=0, paused=false;
+      track.addEventListener('pointerdown', e=>{ isDown=true; paused=true; startX=e.clientX; startScroll=track.scrollLeft; track.setPointerCapture(e.pointerId); });
+      track.addEventListener('pointermove', e=>{ if(!isDown) return; track.scrollLeft = startScroll - (e.clientX - startX); });
+      track.addEventListener('pointerup',   ()=>{ isDown=false; setTimeout(()=>paused=false, 800); });
+      track.addEventListener('pointercancel',()=>{ isDown=false; setTimeout(()=>paused=false, 800); });
+      track.addEventListener('mouseenter', ()=> paused=true);
+      track.addEventListener('mouseleave', ()=> paused=false);
+
+      const step = ()=> {
+        if (paused) return;
+        const firstCard = track.querySelector('.card');
+        if(!firstCard) return;
+        const gap = 12;
+        const w = firstCard.getBoundingClientRect().width + gap;
+        const max = track.scrollWidth - track.clientWidth;
+        let next = track.scrollLeft + w;
+        if (next > max - 4) {
+          track.scrollTo({left:0, behavior:'smooth'});
+        } else {
+          track.scrollTo({left:next, behavior:'smooth'});
+        }
+      };
+      setInterval(step, 3200);
+    }
+
+    // Footer 데이터 채우기
+    async function applyFooter(){
+      try{
+        const mainSnap = await getDoc(doc(db,'settings','main'));
+        const linksSnap = await getDoc(doc(db,'settings','links'));
+        const main = mainSnap.exists() ? mainSnap.data() : {};
+        const links = linksSnap.exists() ? linksSnap.data() : {};
+
+        document.getElementById('fPhone').textContent = main.phone || '—';
+        const biz = main.businessInfo || {};
+        document.getElementById('bizName').textContent  = biz.name  || '—';
+        document.getElementById('bizOwner').textContent = biz.owner || '—';
+        document.getElementById('bizRegNo').textContent = biz.regNo || '—';
+        document.getElementById('bizAddr').textContent  = biz.addr  || '—';
+        document.getElementById('bizEtc').textContent   = biz.etc   || '—';
+
+        if (links.blog){ const a=document.getElementById('fBlog'); a.href=links.blog; a.style.display='inline'; }
+        if (links.map){  const a=document.getElementById('fMap');  a.href=links.map;  a.style.display='inline'; }
+      }catch(e){
+        console.log('[footer] settings load fail:', e?.message||e);
+      }
+    }
+
+    // 초기화
+    await loadCases();
+    await loadReviews();
+    await loadFaqs();
+    await applyFooter();
+  </script>
 </body>
 </html>
