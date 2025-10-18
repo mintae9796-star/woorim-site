@@ -12,28 +12,13 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="비닐하우스 시공·견적 | 우림비닐하우스">
   <meta property="og:description" content="맞춤 설계·시공·보수 — 사례·가격·후기 한눈에.">
-  <meta property="og:image" href="assets/og/og-1200x630.png">
+  <meta property="og:image" content="assets/og/og-1200x630.png">
   <meta property="og:url" content="https://www.woorimhouse.com/">
 
 
 <!-- 파비콘 -->
-  <link rel="apple-touch-icon" sizes="57x57" href="assets/logo/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="assets/logo/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="assets/logo/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/logo/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="assets/logo/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/logo/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="assets/logo/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/logo/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192"  href="assets/logo/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/logo/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16x16.png">
-  <link rel="manifest" href="assets/logo/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="assets/logo/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/x-icon" href="assets/logo/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo/android-icon-36x36.png">
 
 <!-- 네이버/구글 소유권 확인 (발급받은 값으로 교체) -->
 
@@ -80,7 +65,7 @@
       -ms-overflow-style:none; scrollbar-width:none;
     }
     #cases .slides::-webkit-scrollbar{ display:none }
-    #cases .slides .card{flex:0 0 88%;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    #cases .slides .card{flex:0 0 88%;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .25s ease, box-shadow .25s ease; }
     @media(min-width:720px){ #cases .slides .card{flex-basis:48%} }
     @media(min-width:1024px){ #cases .slides .card{flex-basis:32%} }
     .case-thumb{aspect-ratio:16/9;background:#eee}
@@ -88,6 +73,9 @@
     .case-body{padding:12px 14px}
     .case-title{margin:0 0 6px;font-weight:900}
     .case-sub{margin:0;color:var(--muted)}
+    .card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.08);}
 
     /* Pricing */
     .grid{display:grid;gap:12px}
@@ -107,7 +95,7 @@
     @media(min-width:720px){ .reviews{ grid-template-columns:1fr 1fr } }
     .review.card{
       background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
-      display:grid;grid-template-columns:96px 1fr;
+      display:grid;grid-template-columns:96px 1fr;transition:transform .25s ease, box-shadow .25s ease;
     }
     .review .thumb{ background:#f1f5f9; width:96px; height:100%; display:grid; place-items:center }
     .review .thumb img{ width:100%; height:100%; object-fit:cover; border-radius:0 }
@@ -196,6 +184,38 @@
     /* Reveal */
     .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease, transform .55s ease}
     .reveal.visible{opacity:1;transform:none}
+
+/* Services */
+#services .grid { margin-top: 24px; }
+.service-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px 20px;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.04);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.service-card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.08);
+}
+.service-card .icon {
+  font-size:34px;
+  line-height:1;
+  color:var(--brand);
+  margin-bottom:10px;
+}
+.service-card h3 {
+  font-size:17px;
+  color:var(--brand-ink);
+  margin:0 0 8px;
+}
+.service-card p {
+  font-size:14px;
+  color:var(--muted);
+  margin:0;
+}
   </style>
 </head>
 <body>
@@ -261,6 +281,32 @@
       </div>
     </section>
 
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <h2 class="reveal">비닐하우스 시공 · 견적 · 보수 전문</h2>
+    <p class="muted reveal">단동 / 연동 / 스마트(자동개폐) 비닐하우스까지, 실측·설계·시공·보수를 한 번에 제공합니다.</p>
+
+    <div class="grid grid-3 reveal">
+      <div class="service-card">
+        <div class="icon">🏗️</div>
+        <h3>맞춤 설계·시공</h3>
+        <p>용도·규모별 현장 맞춤 구조 제안. 단동·연동형 하우스부터 산업용까지 전문 시공.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">⚙️</div>
+        <h3>자동개폐 시스템</h3>
+        <p>자동환기, IoT 원격 제어 등 최신 자동개폐 솔루션으로 효율적 온습도 관리.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon">🔧</div>
+        <h3>보수 · 리모델링</h3>
+        <p>노후 피복 교체, 구조보강, 단열 및 난방 시스템 개선까지 한 번에 해결합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- Reviews -->
     <section>
       <div class="container">
@@ -283,24 +329,24 @@
       <div class="container">
         <h2 class="reveal" data-cms-key="contact-title">상담 요청</h2>
 
-        <form id="inquiry" class="reveal">
-          <label>
-            <span>이름</span>
-            <input name="name" required placeholder="홍길동"/>
-          </label>
-          <label>
-            <span>연락처</span>
-            <input name="phone" required placeholder="010-0000-0000"/>
-          </label>
-          <label class="full">
-            <span>비고(요청사항)</span>
-            <textarea name="note" placeholder="예: 연동 신축 / 자동개폐 포함 / 현장주소 등"></textarea>
-          </label>
-          <div class="row-actions">
-            <button class="btn" type="submit">스프레드시트로 보내기</button>
-          </div>
-          <p id="formStatus" class="full"></p>
-        </form>
+      <form id="inquiry" class="reveal">
+        <label>
+          <span>이름</span>
+          <input name="name" required placeholder="홍길동"/>
+        </label>
+        <label>
+          <span>연락처</span>
+          <input name="phone" required placeholder="010-0000-0000"/>
+        </label>
+        <label class="full">
+          <span>비고(요청사항)</span>
+          <textarea name="note" placeholder="예: 연동 신축 / 자동개폐 포함 / 현장주소 등"></textarea>
+        </label>
+        <div class="row-actions">
+          <button class="btn" type="submit">문의하기</button>
+        </div>
+        <p id="formStatus" class="full"></p>
+      </form>
 
       </div>
     </section>
@@ -343,7 +389,6 @@
             <div><b>상호</b> <span id="bizName">—</span></div>
             <div><b>대표</b> <span id="bizOwner">—</span></div>
             <div><b>사업자등록번호</b> <span id="bizRegNo">—</span></div>
-            <div><b>주소</b> <span id="bizAddr">—</span></div>
             <div><b>기타</b> <span id="bizEtc">—</span></div>
           </div>
         </div>
@@ -363,8 +408,42 @@
     import { getFirestore, collection, query, where, orderBy, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
     // ===== Google Apps Script Web App URL (스프레드시트 적재) =====
-    // ▶▶ 본인 웹앱 배포 URL로 교체하세요.
-    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec";
+  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwCutvfJrDoTE-kr4-lIpyfc-4raTM0Dy3gbyqZdCpaCxLp7lGyt03SdOzKBw-yG2CV/exec";
+
+  const formEl = document.getElementById("inquiry");
+  const statusEl = document.getElementById("formStatus");
+
+  formEl?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(formEl);
+
+    // simple request (프리플라이트 없음)
+    const payload = new URLSearchParams({
+      name:  fd.get("name")  || "",
+      phone: fd.get("phone") || "",
+      need:  fd.get("note")  || ""
+    });
+
+    try {
+      statusEl.textContent = "전송 중입니다…";
+      const res  = await fetch(GAS_WEBAPP_URL, { method: "POST", body: payload });
+
+
+      // JSON일 경우만 파싱 시도
+      let json = {};
+      try { json = JSON.parse(raw); } catch { /* not json */ }
+
+      if (res.ok && json.ok !== false) {
+        statusEl.textContent = "접수되었습니다. 빠르게 연락드리겠습니다.";
+        formEl.reset();
+      } else {
+        statusEl.textContent = "전송 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+      }
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = "네트워크 오류입니다.";
+    }
+  });
 
     // ===== Firebase =====
     const firebaseConfig = {
@@ -496,40 +575,6 @@
         list.appendChild(el);
       });
     }
-
-    // ===== 문의: 스프레드시트 전송 (GAS) =====
-    async function submitToSheet(payload){
-      const st = document.getElementById('formStatus');
-      st.textContent = '전송 중입니다…';
-      const data = {
-        date: new Date().toISOString(),
-        name: payload.name || '',
-        phone: payload.phone || '',
-        note: payload.note || ''
-      };
-      try{
-        const res = await fetch(GAS_WEBAPP_URL, {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify(data),
-          mode:'cors'
-        });
-        const json = await res.json().catch(()=> ({}));
-        if(res.ok && (json.ok !== false)){
-          st.textContent = '접수되었습니다. 빠르게 연락드릴게요.';
-          document.getElementById('inquiry').reset();
-        }else{
-          st.textContent = '전송 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
-        }
-      }catch(e){
-        st.textContent = '네트워크 오류입니다. 연결을 확인해 주세요.';
-      }
-    }
-    document.getElementById('inquiry')?.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const fd = new FormData(e.currentTarget);
-      submitToSheet(Object.fromEntries(fd.entries()));
-    });
 
     // Carousel: drag + auto-slide
     function initCarousel(){
