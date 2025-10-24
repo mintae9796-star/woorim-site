@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /index.html
+Disallow: /admin.html
+Disallow: /assets/
+Disallow: /scripts/
+Disallow: /firebase/
+Disallow: /private/
+Sitemap: https://www.woorimhouse.com/sitemap.xml
